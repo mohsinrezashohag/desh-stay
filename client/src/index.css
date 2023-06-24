@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla&family=Poppins&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* variables */
+:root{
+  --primary-color:#01257D;
+}
+
+/* whole body & elements */
+body{
+  top: 0;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  font-family: 'Karla', sans-serif;
+  font-family: 'Poppins', sans-serif;
+}
+
+a{
+  color: white;
+  font-weight: 500;
+}
+.text-bl{
+  color: var(--primary-color);
+}
+
+/* common */
+@layer components{
+  .max-width{
+    @apply max-w-[1400px] mx-auto
+  }
+  .flex-center{
+    @apply flex justify-center items-center
+  }
+  .flex-between{
+    @apply flex justify-between items-center
+  }
+  .flex-evenly{
+    @apply flex justify-evenly items-center
+  }
+}
+
+.primary-btn{
+  background-color: var(--primary-color);
+  padding: 10px 15px;
+  color: white;
+  font-weight: 500;
+}
+
+.rounded-btn{
+  background-color: var(--primary-color);
+  padding: 10px 40px;
+  color: white;
+  font-weight: 500;
+  border-radius: 30px;
+}
+
+.heading-details{
+  font-size: 20px;
+  color: white;
+}
+
+
+/******** common page *********/
+/* home page */
+.hero{
+  background-image:  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.253)),url('./assets/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.festive-bg{
+  background-image: url('./assets/rajshahi.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.slick-slide > div {
+  margin: 0 10px;
+  /* height: 300px;
+  width: 400px; */
+}
+.slick-list {
+  margin: 0 -10px;
+}
+
+.join-community{
+  background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(75, 82, 189, 0.256)), url('./assets/city-night.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position:  top;
+}
+
+/******** footer *********/
+.footer{
+  background-color: var(--primary-color);
+}

@@ -11,10 +11,10 @@ import Slider from "react-slick";
 import dhaka from '../../assets/dhaka.jpg'
 import rajshahi from '../../assets/rajshahi.jpg'
 import Footer from '../../components/common/Footer';
+import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
-
     var settings = {
         infinite: true,
         slidesToShow: 4,
@@ -22,10 +22,12 @@ const Home = () => {
         autoplay: true,
         autoplaySpeed: 2000,
         pauseOnHover: true,
-
-
     };
 
+    const navigate = useNavigate()
+    const handleSearch = () => {
+        navigate('/search-result')
+    }
 
 
     return (
@@ -84,7 +86,7 @@ const Home = () => {
                             </select>
                         </div>
 
-                        <div className='bg-white p-3 rounded-full mt-10'>
+                        <div onClick={handleSearch} className='bg-white p-3 rounded-full mt-10 cursor-pointer'>
                             <p className='text-4xl'>🔍</p>
                         </div>
                     </div>

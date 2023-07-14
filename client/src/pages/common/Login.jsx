@@ -2,9 +2,40 @@ import logo from '../../assets/logo_black.png'
 import facebook from '../../assets/facebook.png'
 import google from '../../assets/google.png'
 import tripsIllusion from '../../assets/login.svg'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useLoginMutation } from '../../rtk/features/user/userApi';
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '../../rtk/features/user/userSlice';
 
 const Login = () => {
+
+    const dispatch = useDispatch()
+    const [loginNow, { data, isLoading, isSuccess, isError, error }] = useLoginMutation()
+
+    const [loginInfo, setLoginInfo] = useState({
+        "email": "",
+        "password": "",
+    })
+
+    const navigate = useNavigate()
+    const handleLogin = (e) => {
+        e.preventDefault()
+        loginNow(loginInfo)
+            .unwrap()
+            .then(res => {
+                const { userInfo, token } = res;
+                const result = { userInfo, token }
+                localStorage.setItem("userInfo", JSON.stringify(result))
+                dispatch(setUserInfo(result))
+                navigate('/')
+            })
+            .catch((error) => {
+
+            })
+    }
+
+
     return (
         <section className="max-width flex-evenly items-center">
             <div>
@@ -12,14 +43,19 @@ const Login = () => {
                 <div>
                     <div>
                         <h1 className="text-4xl font-bold uppercase mt-10">Welcome</h1>
-                        <form className='flex flex-col' action="">
-                            <input type="text" placeholder="Username/Email" className="py-4  my-5 border-b-4  w-[500px]  px-3" />
-                            <input type="text" placeholder="Password" className="py-4  my-5 border-b-4 w-[500px]  px-3" />
+
+
+                        <form onSubmit={handleLogin} className='flex flex-col' action="">
+                            <input onChange={e => setLoginInfo({ ...loginInfo, email: e.target.value })} type="text" placeholder="Username/Email" className="input-border py-4  my-5   w-[500px]  px-3" />
+                            <input onChange={e => setLoginInfo({ ...loginInfo, password: e.target.value })} type="text" placeholder="Password" className="py-4  my-5 input-border w-[500px]  px-3" />
+                            <div className='flex gap-4 py-4'>
+                                <button type='submit' className='rounded-btn'>Login</button>
+                                <button className='text-bl uppercase font-semibold'>Forgot Password</button>
+                            </div>
                         </form>
-                        <div className='flex gap-4'>
-                            <button className='rounded-btn'>Login</button>
-                            <button className='text-bl uppercase font-semibold'>Forgot Password</button>
-                        </div>
+
+
+
 
 
                         <div>

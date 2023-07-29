@@ -19,6 +19,7 @@ body{
   box-sizing: border-box;
   font-family: 'Karla', sans-serif;
   font-family: 'Poppins', sans-serif;
+  scroll-behavior: smooth;
 }
 
 a{
@@ -121,4 +122,11 @@ input:active{
 /******** footer *********/
 .footer{
   background-color: var(--primary-color);
+}
+
+/* listing page */
+.active-selection{
+  background-color: var(--primary-color);
+  color: white;
+
 }

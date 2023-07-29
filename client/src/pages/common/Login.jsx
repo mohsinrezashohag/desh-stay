@@ -73,7 +73,6 @@ const Login = () => {
                                 <p className='underline uppercase text-gray-400'>Terms & condition</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

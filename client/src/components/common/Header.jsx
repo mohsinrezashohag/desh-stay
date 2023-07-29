@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom";
+import logo from '../../assets/logo.png'
 
 const Header = () => {
     return (
         <nav className='max-width flex-between'>
             <img
                 className='h-[100px] mt-6'
-                src='../../../public/images/logo.png'
+                src={logo}
                 alt="" />
             <ul className='flex-center gap-3'>
                 <li>
@@ -20,7 +22,7 @@ const Header = () => {
                     <a href="/login">Sign in</a>
                 </li>
                 <li>
-                    <button className='primary-btn'>List Your Property</button>
+                    <Link to='/list-property' className='primary-btn'>List Your Property</Link>
                 </li>
             </ul>
         </nav >

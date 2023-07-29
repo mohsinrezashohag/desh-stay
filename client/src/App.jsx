@@ -14,6 +14,7 @@ import RecentTrips from "./pages/member/RecentTrips";
 import SetupProfile from "./pages/common/SetupProfile";
 import ListProperty from "./pages/seller/ListProperty";
 import ListPropertySecondStep from "./pages/seller/ListPropertySecondStep";
+import ListPropertyThirdStep from "./pages/seller/ListPropertyThirdStep";
 
 
 function App() {
@@ -38,7 +39,8 @@ function App() {
 
           {/* seller */}
           <Route path="/list-property" element={<ListProperty></ListProperty>}></Route>
-          <Route path="/list-property-extra-info" element={<ListPropertySecondStep></ListPropertySecondStep>}></Route>
+          <Route path="/list-property-second-step" element={<ListPropertySecondStep></ListPropertySecondStep>}></Route>
+          <Route path="/list-property-third-step" element={<ListPropertyThirdStep></ListPropertyThirdStep>}></Route>
 
 
         </Routes>

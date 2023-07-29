@@ -1,14 +1,100 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+
 // components
 import SecondHeader from '../../components/common/SecondHeader'
 import Footer from '../../components/common/Footer';
 
 // icons
-import homeIcon from '../../assets/house-solid.svg'
-import apartmentIcon from '../../assets/building-solid.svg'
-import ecoIcon from '../../assets/pagelines.svg'
+import plusIcon from '../../assets/circle-plus-solid.svg'
+import minusIcon from '../../assets/circle-minus-solid.svg'
+import { setPropertyToStore } from "../../rtk/features/property/propertySlice";
+
 
 const ListPropertySecondStep = () => {
+
+    // const prevPageProperty = JSON.parse(localStorage.getItem('property'))
+    const prevPageProperty = useSelector(state => state.property.property)
+
+    const [property, setProperty] = useState(prevPageProperty)
+
+
+    // Guest Limit
+    const inCreaseGuestLimit = () => {
+        setProperty({ ...property, basics: { ...property?.basics, guestLimit: property?.basics?.guestLimit + 1 } })
+    }
+    const decreaseGuestLimit = () => {
+        setProperty({ ...property, basics: { ...property?.basics, guestLimit: property?.basics?.guestLimit - 1 } })
+    }
+
+    // bedroom Limit
+    const inCreaseBedroomLimit = () => {
+        setProperty({ ...property, basics: { ...property?.basics, bedroom: property?.basics?.bedroom + 1 } })
+    }
+    const decreaseBedroomLimit = () => {
+        setProperty({ ...property, basics: { ...property?.basics, bedroom: property?.basics?.bedroom - 1 } })
+    }
+
+    // bathroom Limit
+    const inCreaseBathroomLimit = () => {
+        setProperty({ ...property, basics: { ...property?.basics, bathroom: property?.basics?.bathroom + 1 } })
+    }
+    const decreaseBathroomLimit = () => {
+        setProperty({ ...property, basics: { ...property?.basics, bathroom: property?.basics?.bathroom - 1 } })
+    }
+
+
+    // change facilities selection
+    const handleFacilitiesSelectionChange = (value) => {
+        const index = property?.facilities.indexOf(value)
+        if (index === -1) {
+            setProperty({ ...property, facilities: [...property.facilities, value] })
+        }
+        else {
+            const filteredArray = property?.facilities?.filter(item => item !== value)
+            console.log("filteredArray :", filteredArray);
+            setProperty({ ...property, facilities: [...filteredArray] })
+        }
+    }
+
+    // change standout amenities selection
+    const handleStandoutAmenitiesChange = (value) => {
+        const index = property?.standoutAmenities.indexOf(value)
+        if (index === -1) {
+            setProperty({ ...property, standoutAmenities: [...property.standoutAmenities, value] })
+        }
+        else {
+            const filteredArray = property?.standoutAmenities?.filter(item => item !== value)
+            setProperty({ ...property, standoutAmenities: [...filteredArray] })
+        }
+    }
+
+    // change safety items selection
+    const handleSafetyItemsChange = (value) => {
+        const index = property?.safetyItems.indexOf(value)
+        if (index === -1) {
+            setProperty({ ...property, safetyItems: [...property.safetyItems, value] })
+        }
+        else {
+            const filteredArray = property?.safetyItems?.filter(item => item !== value)
+            setProperty({ ...property, safetyItems: [...filteredArray] })
+        }
+    }
+
+
+
+    // handle next step
+    const dispatch = useDispatch()
+    const handleNextStep = () => {
+        dispatch(setPropertyToStore(property))
+    }
+
+
+
+
+
+
     return (
         <>
             <SecondHeader></SecondHeader>
@@ -43,103 +129,114 @@ const ListPropertySecondStep = () => {
 
 
 
-                {/* appartment type */}
+                {/* basics */}
                 <div>
-                    <h1 className='text-3xl uppercase text-bl font-semibold pt-20 pb-5'>List your property</h1>
-
                     <div>
-                        <h1 className='text-1xl uppercase text-bl font-semibold pt-10 pb-5'> Select property type</h1>
+                        <h1 className='text-1xl uppercase text-bl font-semibold pt-10 pb-5'> Some basics about your place</h1>
 
-                        <div className='flex gap-x-6'>
-                            <div className='flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400'>
-                                <img src={homeIcon} width={20} alt="" />
-                                <p>House</p>
+                        <div className="w-[30%] flex flex-col gap-y-6 mt-6">
+                            <div className="flex gap-x-2 justify-between">
+                                <p className="text-gr uppercase">Maximum guest limit</p>
+                                <div className="flex gap-x-8">
+
+                                    {property?.basics?.guestLimit >= 1 && <img onClick={() => decreaseGuestLimit()} className="cursor-pointer" src={minusIcon} width={25} alt="" />}
+
+                                    {property?.basics?.guestLimit}
+                                    <img onClick={() => inCreaseGuestLimit()} className="cursor-pointer" src={plusIcon} width={25} alt="" />
+
+                                </div>
                             </div>
+                            <div className="flex gap-x-2 justify-between">
+                                <p className="text-gr uppercase">Bedroom</p>
+                                <div className="flex gap-x-8">
 
-                            <div className='flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400'>
-                                <img src={apartmentIcon} width={20} alt="" />
-                                <p>Apartment</p>
+                                    {property?.basics?.bedroom >= 1 && <img onClick={() => decreaseBedroomLimit()} className="cursor-pointer" src={minusIcon} width={25} alt="" />}
+
+                                    {property?.basics?.bedroom}
+                                    <img onClick={() => inCreaseBedroomLimit()} className="cursor-pointer" src={plusIcon} width={25} alt="" />
+
+                                </div>
                             </div>
+                            <div className="flex gap-x-2 justify-between">
+                                <p className="text-gr uppercase">Bathroom</p>
+                                <div className="flex gap-x-8">
 
-                            <div className='flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400'>
-                                <img src={ecoIcon} width={20} alt="" />
-                                <p>Eco</p>
+                                    {property?.basics?.bathroom >= 1 && <img onClick={() => decreaseBathroomLimit()} className="cursor-pointer" src={minusIcon} width={25} alt="" />}
+
+                                    {property?.basics?.bathroom}
+                                    <img onClick={() => inCreaseBathroomLimit()} className="cursor-pointer" src={plusIcon} width={25} alt="" />
+
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
 
-                {/* room type */}
+                {/* facilities */}
                 <div>
-                    <h1 className='text-1xl uppercase text-bl font-semibold pt-20 pb-5'> Select room type</h1>
+                    <h1 className='text-1xl uppercase text-bl font-semibold pt-20 pb-5'> Facilities</h1>
                     <div className='flex gap-x-6'>
-                        <div className='flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400'>
-                            <p>Entire Place</p>
+                        <div onClick={() => handleFacilitiesSelectionChange('Food')} className={`flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400 ${property.facilities.includes('Food') && 'active-selection'}`}>
+                            <p>Food</p>
                         </div>
-                        <div className='flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400'>
-                            <p>Private Room</p>
+                        <div onClick={() => handleFacilitiesSelectionChange('Wifi')} className={`flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400 ${property?.facilities?.includes('Wifi') && 'active-selection'}`}>
+                            <p>Wifi</p>
                         </div>
-                        <div className='flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400'>
-                            <p>Shared Room</p>
+                        <div onClick={() => handleFacilitiesSelectionChange('Television')} className={`flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400 ${property?.facilities?.includes('Television') && 'active-selection'}`}>
+                            <p>Television</p>
+                        </div>
+                        <div onClick={() => handleFacilitiesSelectionChange('Parking')} className={`flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400 ${property?.facilities?.includes('Parking') && 'active-selection'}`}>
+                            <p>Parking</p>
                         </div>
                     </div>
                 </div>
 
 
-                {/* location selection */}
-                <div className='w-[60%]'>
-                    <h1 className='text-1xl uppercase text-bl font-semibold pt-20 pb-5'>Location</h1>
-                    <div className='w-50'>
-                        <iframe
-                            className="w-full h-[400px] mt-5"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7302.120277646824!2d90.35348134445317!3d23.780872714598367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c0be89363e87%3A0x3795036c15355c82!2sKallyanpur%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1688641577268!5m2!1sen!2sbd" allowfullscreen="" loading="lazy"  >
-                        </iframe>
+
+                {/* standout amenities */}
+                <div>
+                    <h1 className='text-1xl uppercase text-bl font-semibold pt-20 pb-5'> standout amenities
+                    </h1>
+                    <div className='flex gap-x-6'>
+                        <div onClick={() => handleStandoutAmenitiesChange('Pool')} className={`flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400 ${property?.standoutAmenities?.includes('Pool') && 'active-selection'}`}>
+                            <p>Pool</p>
+                        </div>
+                        <div onClick={() => handleStandoutAmenitiesChange('Hot Tub')} className={`flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400  ${property?.standoutAmenities?.includes('Hot Tub') && 'active-selection'}`}>
+                            <p>Hot Tub</p>
+                        </div>
+                        <div onClick={() => handleStandoutAmenitiesChange('Gym Equipments')} className={`flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400 ${property?.standoutAmenities?.includes('Gym Equipments') && 'active-selection'}`}>
+                            <p>Gym Equipments</p>
+                        </div>
+                        <div onClick={() => handleStandoutAmenitiesChange('Piano')} className={`flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400 ${property?.standoutAmenities?.includes('Piano') && 'active-selection'}`}>
+                            <p>Piano</p>
+                        </div>
                     </div>
                 </div>
 
 
-                {/* detail address */}
-                <div className='w-[60%] mb-20'>
-                    <h1 className='text-1xl uppercase text-bl font-semibold pt-20 '>Details Address</h1>
-                    <p className='text-gr'>Note: your detail address is only shared with guest only when the reservation is confirmed</p>
-                    <div className='w-50'>
+                {/* safety items */}
+                <div>
+                    <h1 className='text-1xl uppercase text-bl font-semibold pt-20 pb-5'>Safety Items</h1>
+                    <div className='flex gap-x-6'>
+                        <div onClick={() => handleSafetyItemsChange('Smoke Alarm')} className={`flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400 ${property?.safetyItems?.includes('Smoke Alarm') && 'active-selection'}`}>
+                            <p>Smoke Alerm</p>
+                        </div>
+                        <div onClick={() => handleSafetyItemsChange('First Aid Kit')} className={`flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400 ${property?.safetyItems?.includes('First Aid Kit') && 'active-selection'}`}>
+                            <p>First Aid Kit</p>
+                        </div>
+                        <div onClick={() => handleSafetyItemsChange('Fire Extinguisher')} className={`flex gap-x-3 items-center  px-10 py-3 shadow-md rounded-md cursor-pointer border-2 border-gray-400 ${property?.safetyItems?.includes('Fire Extinguisher') && 'active-selection'}`}>
+                            <p>Fire Extinguisher</p>
+                        </div>
 
-
-                        <form action="#">
-                            <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
-
-
-                                <div className="sm:col-span-2 mt-4">
-                                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Road no. / Apartment no</label>
-                                    <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" />
-                                </div>
-                                <div className="sm:col-span-2">
-                                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Street Address</label>
-                                    <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" />
-                                </div>
-
-
-                                <div className='flex gap-x-3'>
-                                    <div>
-                                        <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">City</label>
-                                        <input type="number" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zip Code</label>
-                                        <input type="number" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" />
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-                        </form>
-                        <Link to='/list-property-extra-info'><button className='primary-btn w-40 rounded-md'>Next Step</button></Link>
                     </div>
                 </div>
 
 
+
+
+                <Link to='/list-property-third-step'><button onClick={() => handleNextStep()} className='primary-btn w-40 rounded-md my-20'>Next</button></Link>
 
 
 

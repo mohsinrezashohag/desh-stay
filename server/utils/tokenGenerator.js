@@ -1,4 +1,6 @@
 var jwt = require('jsonwebtoken');
+const dotenv = require('dotenv').config();
+
 
 module.exports.generateToken = (id) => {
     console.log(id);

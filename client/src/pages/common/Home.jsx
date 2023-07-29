@@ -3,10 +3,6 @@ import Header from '../../components/common/Header';
 
 //third party package
 import Slider from "react-slick";
-
-
-
-
 // images
 import dhaka from '../../assets/dhaka.jpg'
 import rajshahi from '../../assets/rajshahi.jpg'
@@ -125,7 +121,7 @@ const Home = () => {
 
 
             {/* Desired district section */}
-            <section className='max-width py-10 '>
+            {/* <section className='max-width py-10 '>
 
 
                 <h1 className='text-6xl font-bold uppercase text-center pb-16'>Pick your desired district</h1>
@@ -177,13 +173,13 @@ const Home = () => {
 
                 </div>
 
-            </section >
+            </section > */}
 
 
 
 
             {/* occasion section */}
-            <section className='max-width'>
+            {/* <section className='max-width'>
                 <h1 className='text-5xl font-bold uppercase text-center pt-28 pb-10'>Explore ongoing occasion <br />with Desh Stay </h1>
 
                 <div className='pt-10'>
@@ -216,7 +212,7 @@ const Home = () => {
                         </div>
                     </Slider>
                 </div >
-            </section >
+            </section > */}
 
 
 

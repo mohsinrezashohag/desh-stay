@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../../../public/images/logo.png'
+import logo from '../../assets/logo.png'
 import profileIcon from '../../assets/avatar.png'
 import notificationIcon from '../../assets/bell.png'
 
@@ -14,7 +14,8 @@ const SecondHeader = () => {
                 </div>
                 <ul className='flex-center gap-8'>
                     <li>
-                        <button style={{ backgroundColor: 'white', color: '#01257d', fontWeight: "800" }} className='primary-btn '>List Your Property</button>
+                        <Link to='/list-property' className='primary-btn' style={{ backgroundColor: 'white', color: '#01257d', fontWeight: "800" }}>List Your Property</Link>
+
                     </li>
                     <li>
                         <a href="#gettheapp">Wishlist</a>

@@ -35,9 +35,9 @@ const ListProperty = () => {
             bedroom: 5,
             bathroom: 5
         },
-        facilities: ["food", "wifi", "parking"],
-        standoutAmenities: ["pool", "gym equipment"],
-        safetyItems: ["smock alarm", "first aid kid"],
+        facilities: [],
+        standoutAmenities: [],
+        safetyItems: [],
         thumbnail: "",
         extraImages: {
             imageOne: "",

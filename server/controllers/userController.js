@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const { generateToken } = require('../utils/tokenGenerator')
 
 
-exports.registerUser = async (req, res, next) => {
+module.exports.registerUser = async (req, res, next) => {
     try {
         const newUser = req?.body;
 
@@ -27,7 +27,7 @@ exports.registerUser = async (req, res, next) => {
     }
 }
 
-exports.loginUser = async (req, res) => {
+module.exports.loginUser = async (req, res) => {
     try {
         console.log("hit");
 

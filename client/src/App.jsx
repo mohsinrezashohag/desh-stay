@@ -15,12 +15,20 @@ import SetupProfile from "./pages/common/SetupProfile";
 import ListProperty from "./pages/seller/ListProperty";
 import ListPropertySecondStep from "./pages/seller/ListPropertySecondStep";
 import ListPropertyThirdStep from "./pages/seller/ListPropertyThirdStep";
+import Wishlist from "./pages/member/Wishlist";
+import { Toaster } from 'react-hot-toast'
+import useAuthCheck from "./hooks/useAuthcheck";
 
 
 function App() {
-
+  const userSingedIn = useAuthCheck()
+  console.log(userSingedIn);
   return (
     <>
+      <Toaster
+        position="bottom-right"
+        reverseOrder={false}
+      />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home></Home>}></Route>
@@ -30,12 +38,14 @@ function App() {
           {/* common */}
           <Route path="/profile" element={<Profile></Profile>}></Route>
           <Route path="/search-result" element={<SearchResult></SearchResult>}></Route>
-          <Route path="/apartment-details" element={<ApartmentDetails></ApartmentDetails>}></Route>
+          <Route path="/apartment-details/:id" element={<ApartmentDetails></ApartmentDetails>}></Route>
           <Route path="/setup-profile" element={<SetupProfile></SetupProfile>}></Route>
 
           {/* member */}
           <Route path="/book-now" element={<BookingConfirmation></BookingConfirmation>}></Route>
           <Route path="/your-trips" element={<RecentTrips></RecentTrips>}></Route>
+          <Route path="/wishlist" element={<Wishlist></Wishlist>}></Route>
+
 
           {/* seller */}
           <Route path="/list-property" element={<ListProperty></ListProperty>}></Route>

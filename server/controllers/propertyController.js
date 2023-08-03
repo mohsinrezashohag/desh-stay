@@ -1,33 +1,65 @@
 const Property = require("../models/propertyModel");
 
 
-exports.addPropertyListing = async (req, res) => {
+module.exports.addPropertyListing = async (req, res) => {
     try {
-
-        // const fullObject = req.body.fullObject
-        // const thumbnail = req.file.filename;
-        // const property = { ...JSON.parse(fullObject), thumbnail: thumbnail }
-        // const addedProperty = await Property.create(property)
-
-
         const fullObject = req.body.fullObject
         const thumbnail = req.files.thumbnail[0].filename;
         const extraImages = req.files.extraImages.map(file => file.filename)
 
+
+        console.log(thumbnail, extraImages);
         const property = { ...JSON.parse(fullObject), thumbnail: thumbnail, extraImages: extraImages }
         const addedProperty = await Property.create(property)
 
-        if (addedProperty) {
-            console.log("add hocche");
-        }
-        // return res.status(200).json({
-        //     success: true,
-        //     message: "property listed successfully",
-        //     data: addedProperty
-        // })
-        // console.log(property);
+        return res.status(200).json({
+            success: true,
+            message: "property listed successfully",
+            data: addedProperty
+        })
 
     } catch (error) {
         console.log(error);
+        return res.status(400).json({
+            success: false,
+            message: "property listing failed",
+        })
+    }
+}
+module.exports.getAllProperty = async (req, res) => {
+    try {
+        const allProperty = await Property.find({})
+
+        return res.status(200).json({
+            success: true,
+            message: "property loaded successfully",
+            data: allProperty
+        })
+
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            message: "property loading failed",
+        })
+    }
+}
+module.exports.getPropertyDetails = async (req, res) => {
+    try {
+        console.log("ekahne hit hocche");
+        const id = req.params.id
+        console.log(id);
+        const propertyDetails = await Property.findById({ _id: id })
+
+        return res.status(200).json({
+            success: true,
+            message: "property details loaded successfully",
+            data: propertyDetails
+        })
+
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            message: "property details loaded successfully",
+        })
     }
 }

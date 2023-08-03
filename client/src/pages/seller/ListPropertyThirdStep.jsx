@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // components
 import SecondHeader from '../../components/common/SecondHeader'
 import Footer from '../../components/common/Footer';
@@ -7,10 +7,11 @@ import uploadIcon from '../../assets/cloud-arrow-up-solid.svg'
 // hooks
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { usePostPropertyMutation } from "../../rtk/features/property/propertyApi";
 
 
 const ListPropertyThirdStep = () => {
-
+    const navigate = useNavigate()
 
     // const prevPageProperty = JSON.parse(localStorage.getItem('property'))
     const prevPageProperty = useSelector(state => state.property.property)
@@ -44,7 +45,7 @@ const ListPropertyThirdStep = () => {
 
 
     // handle property posting
-
+    const [postProperty, { data, isLoading, isSuccess }] = usePostPropertyMutation()
     const handleImageUpload = async () => {
         const formData = new FormData()
         formData.append('thumbnail', image)
@@ -52,18 +53,12 @@ const ListPropertyThirdStep = () => {
             formData.append('extraImages', image);
         }
         formData.append('fullObject', JSON.stringify(property))
-
-        const result = await fetch('http://localhost:8000/api/v1/property/list', {
-
-            method: "POST",
-            body: formData,
-        })
-        console.log(result);
+        postProperty(formData)
+            .unwrap()
+            .then(result => {
+                navigate('/')
+            })
     }
-
-
-
-
 
     return (
         <>
@@ -106,24 +101,59 @@ const ListPropertyThirdStep = () => {
 
 
 
-                {/* thumbnail image type */}
+                {/* thumbnail image */}
                 <div>
 
-                    <div>
-                        <h1 className='text-1xl uppercase text-bl font-semibold pt-10 pb-5'> Add Photos of youre place</h1>
-                        <div onClick={handleBoxClick} style={{ border: '2px dashed ' }} className="cursor-pointer w-[30%] h-[300px] p-5 flex flex-col justify-center items-left">
-
-                            {image ? <img className="mb-10 " width="200px" src={URL.createObjectURL(image)} alt="" /> : <img className="mb-10 " width="100px" src={uploadIcon} alt="" />
-                            }
-                            <input onChange={(e) => setImage(e.target.files[0])} ref={inputRef} id="image-input-field" name="thumbnail" type="file" />
+                    <div className="text-left"> {/* Updated: Added 'text-left' class */}
+                        <h1 className="text-xl uppercase text-blue-500 font-semibold pt-10 pb-5">
+                            Add Photos of Your Place
+                        </h1>
+                        <div
+                            onClick={handleBoxClick}
+                            className="cursor-pointer w-64 h-64 p-5 border-2 border-dashed border-gray-300 rounded-md flex flex-col justify-center items-center "
+                        >
+                            {image ? (
+                                <img className="mb-4 rounded-lg" width="200" src={URL.createObjectURL(image)} alt="" />
+                            ) : (
+                                <img className="mb-4" width="100" src={uploadIcon} alt="" />
+                            )}
+                            <input
+                                onChange={(e) => setImage(e.target.files[0])}
+                                ref={inputRef}
+                                id="image-input-field"
+                                name="thumbnail"
+                                type="file"
+                                className="hidden"
+                            />
+                            <span className="text-sm text-gray-500">Click to Upload or change</span>
                         </div>
                     </div>
 
-                    <div>
-                        <h1 className='text-1xl uppercase text-bl font-semibold pt-10 pb-5'> Add 3 More Photos of youre place</h1>
-                        <input onChange={handleImagesChange} multiple ref={SecondInputRef} id="image-input-field" name="image-input-field" type="file" />
+
+
+
+                    {/* extra images*/}
+                    <div className="text-left">
+                        <h1 className="text-xl uppercase text-blue-500 font-semibold pt-10 pb-5">
+                            Add 3 More Photos of Your Place
+                        </h1>
+                        <input
+                            onChange={handleImagesChange}
+                            multiple
+                            ref={SecondInputRef}
+                            id="image-input-field"
+                            name="image-input-field"
+                            type="file"
+                        />
                         <div className="flex gap-x-3 mt-10">
-                            {images && images.map((item, index) => <img key={index} src={URL.createObjectURL(item)} className="w-[100px]"></img>)}
+                            {images &&
+                                images.map((item, index) => (
+                                    <img
+                                        key={index}
+                                        src={URL.createObjectURL(item)}
+                                        className="w-24 h-16 object-cover border-2 border-gray-300 rounded-md"
+                                    />
+                                ))}
                         </div>
                     </div>
 

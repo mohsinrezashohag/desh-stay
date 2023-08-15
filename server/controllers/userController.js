@@ -29,8 +29,6 @@ module.exports.registerUser = async (req, res, next) => {
 
 module.exports.loginUser = async (req, res) => {
     try {
-        console.log("hit");
-
         const userData = req.body;
         const user = await User.findOne({ email: userData.email })
         // checking user exists
@@ -48,10 +46,8 @@ module.exports.loginUser = async (req, res) => {
 
         //token generate & password hide in response
         const token = generateToken({ id: user?._id })
-        console.log(token);
         const { password, ...userInfo } = user.toObject()
 
-        console.log("baki shob ok");
         return res.status(200).json({
             success: true,
             message: "logged in successfully",
@@ -61,5 +57,21 @@ module.exports.loginUser = async (req, res) => {
 
     } catch (error) {
         errorSender(res, 400, false, "Logged in failed")
+    }
+}
+
+module.exports.updateUser = async (req, res) => {
+    try {
+        const updatedUser = req.body;
+        const user = await User.findByIdAndUpdate(updatedUser._id, updatedUser)
+
+        return res.status(200).json({
+            success: true,
+            message: "user updated successfully",
+            updatedUser: user,
+        })
+
+    } catch (error) {
+        errorSender(res, 400, false, "user updated failed")
     }
 }

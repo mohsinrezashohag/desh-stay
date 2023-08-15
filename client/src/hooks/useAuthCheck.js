@@ -7,6 +7,8 @@ const useAuthCheck = () => {
     const dispatch = useDispatch()
     const userInfo = localStorage.getItem('userInfo')
 
+
+
     useEffect(() => {
         if (userInfo) {
             setIsChecked(true)

@@ -1,6 +1,32 @@
-
+const mongoose = require('mongoose')
 const Wishlist = require('../models/wishListModel')
+const Property = require('../models/propertyModel')
 
+
+
+
+exports.getAllWishlist = async (req, res, next) => {
+    try {
+
+        const allWishlist = await Wishlist.find({}).populate({
+            path: "property",
+            select: "title thumbnail basics basics detailsAddress costPerNight"
+        })
+
+
+        return res.status(200).json({
+            success: true,
+            message: "All wishlist property loaded successfully",
+            data: allWishlist
+        })
+
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            message: "All wishlist property loaded failed",
+        })
+    }
+}
 
 exports.addToWishlist = async (req, res, next) => {
     try {
@@ -20,37 +46,40 @@ exports.addToWishlist = async (req, res, next) => {
 }
 
 
-exports.getAllWishlistProperty = async (req, res, next) => {
+exports.userWishlist = async (req, res, next) => {
     try {
-        const addedProperty = await Wishlist.find({})
+        const userId = req.params.userId
+        const myWishProperties = await Wishlist.find({ user: userId }).populate({
+            path: "property",
+            select: "title thumbnail basics basics detailsAddress costPerNight"
+        })
+
         return res.status(200).json({
             success: true,
-            message: "wishlist property loaded successfully",
-            data: addedProperty
+            message: "Your wishlist property loaded successfully",
+            data: myWishProperties
         })
     } catch (error) {
         return res.status(400).json({
             success: false,
-            message: "wishlist property loaded failed",
+            message: "Your wishlist property loaded failed",
         })
     }
 }
 
-exports.userWishlist = async (req, res, next) => {
+exports.removePropertyFromWishlist = async (req, res, next) => {
     try {
-        const userId = req.params.userId
-        console.log("hitting here :", userId);
+        const wishItemId = req.params.id
+        const myWishProperties = await Wishlist.findByIdAndDelete({ _id: wishItemId })
 
-        const userWishlist = await Wishlist.find({ user: userId })
         return res.status(200).json({
             success: true,
-            message: "Your wishlist loaded successfully",
-            data: userWishlist
+            message: "Your wishlist property deleted successfully",
         })
     } catch (error) {
         return res.status(400).json({
             success: false,
-            message: "Your wishlist loaded failed",
+            message: "Your wishlist property deleted failed",
         })
     }
 }

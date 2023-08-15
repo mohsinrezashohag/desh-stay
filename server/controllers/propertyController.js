@@ -8,7 +8,6 @@ module.exports.addPropertyListing = async (req, res) => {
         const extraImages = req.files.extraImages.map(file => file.filename)
 
 
-        console.log(thumbnail, extraImages);
         const property = { ...JSON.parse(fullObject), thumbnail: thumbnail, extraImages: extraImages }
         const addedProperty = await Property.create(property)
 
@@ -19,7 +18,6 @@ module.exports.addPropertyListing = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
         return res.status(400).json({
             success: false,
             message: "property listing failed",
@@ -45,9 +43,7 @@ module.exports.getAllProperty = async (req, res) => {
 }
 module.exports.getPropertyDetails = async (req, res) => {
     try {
-        console.log("ekahne hit hocche");
         const id = req.params.id
-        console.log(id);
         const propertyDetails = await Property.findById({ _id: id })
 
         return res.status(200).json({

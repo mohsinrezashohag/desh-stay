@@ -43,11 +43,16 @@ const userSchema = new mongoose.Schema({
     permanentAddress: {
         type: String,
     },
+    profession: {
+        type: String
+    }
+    ,
     role: {
         type: String,
         enum: ["member", "seller", 'administrator', "admin"],
         default: "member"
     },
+
 }, {
     timeStamps: true
 })

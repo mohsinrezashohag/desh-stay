@@ -12,6 +12,9 @@ import { useGetAllPropertyQuery } from '../../rtk/features/property/propertyApi'
 import Loading from '../../components/common/Loading'
 import { useDispatch } from 'react-redux'
 import { setPropertyToStore } from '../../rtk/features/property/propertySlice'
+import { useState } from 'react'
+import { DateRange } from 'react-date-range'
+import HeaderSearch from '../../components/common/HeaderSearch'
 
 const Home = () => {
   const dispatch = useDispatch()
@@ -21,6 +24,15 @@ const Home = () => {
   if (properties) {
     dispatch(setPropertyToStore(properties))
   }
+
+  // date handle
+  const [date, setDate] = useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: 'selection',
+    },
+  ])
 
   // handle search
   const navigate = useNavigate()
@@ -36,7 +48,7 @@ const Home = () => {
         <div className='max-width flex-between pt-16'>
           <div className=''></div>
 
-          <div className='py-8'>
+          <div className='py-8 px-10 md:px-0'>
             <h1 className='text-6xl font-bold uppercase text-white'>
               Home is wherever
               <br />
@@ -57,63 +69,8 @@ const Home = () => {
 
         <div className='text-center text-white py-10 pb-40'>
           <h1 className='text-4xl uppercase font-bold'>Find Your Next Stay</h1>
-
-          <div className='flex-center gap-3 py-6 mt-10'>
-            <div className=''>
-              <h1 className='text-3px uppercase font-semibold py-2 '>
-                Select Destination
-              </h1>
-              <input
-                className='text-black w-[250px] py-3 rounded-full'
-                type='text'
-                placeholder='write your destination'
-              />
-
-              {/* <select className='text-black w-[250px] py-5 rounded-full font-bold  text-center' name="" id="">
-                                <option value="Dhaka" selected>WHERE TO</option>
-                                <option value="Chittagong" >Chittagong</option>
-                            </select> */}
-            </div>
-
-            <div>
-              <h1 className='uppercase font-semibold py-2'>Arrival Date</h1>
-              <input
-                className='text-black w-[250px] py-3 rounded-full  text-center'
-                type='date'
-                name='arrival-date'
-                id='arrival-date'
-              />
-            </div>
-
-            <div>
-              <h1 className='uppercase font-semibold py-2'>Departure Date</h1>
-              <input
-                className='text-black w-[250px] py-3 rounded-full  text-center'
-                type='date'
-                name='arrival-date'
-                id='arrival-date'
-              />
-            </div>
-
-            <div>
-              <h1 className='text-3px uppercase font-semibold py-2'>
-                Total Guest
-              </h1>
-              <input
-                className='text-black w-[250px] py-3 rounded-full  text-center'
-                type='Number'
-                name='guest-number'
-                id='guest-number'
-                placeholder='0'
-              />
-            </div>
-
-            <div
-              onClick={handleSearch}
-              className='bg-white p-3 rounded-full mt-10 cursor-pointer'
-            >
-              <p className=' text-black'>Search Now 🔍</p>
-            </div>
+          <div className='mx-auto'>
+            <HeaderSearch></HeaderSearch>
           </div>
         </div>
       </section>

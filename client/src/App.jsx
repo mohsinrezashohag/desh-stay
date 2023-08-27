@@ -20,6 +20,8 @@ import { Toaster } from 'react-hot-toast'
 import useAuthCheck from './hooks/useAuthcheck'
 import Listings from './pages/member/Listings'
 import PrivateRoute from './utils/privateRoute'
+import Dashboard from './pages/admin/Dashboard'
+import PublicRoute from './utils/PublicRoute'
 
 function App() {
   const userSingedIn = useAuthCheck()
@@ -30,8 +32,22 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home></Home>}></Route>
-          <Route path='/login' element={<Login></Login>}></Route>
-          <Route path='/register' element={<Register></Register>}></Route>
+          <Route
+            path='/login'
+            element={
+              <PublicRoute>
+                <Login></Login>
+              </PublicRoute>
+            }
+          ></Route>
+          <Route
+            path='/register'
+            element={
+              <PublicRoute>
+                <Register></Register>
+              </PublicRoute>
+            }
+          ></Route>
 
           {/* common */}
           <Route path='/profile' element={<Profile></Profile>}></Route>
@@ -101,6 +117,17 @@ function App() {
             element={
               <PrivateRoute>
                 <ListPropertyThirdStep></ListPropertyThirdStep>
+              </PrivateRoute>
+            }
+          ></Route>
+
+          {/* admin */}
+
+          <Route
+            path='/dashboard'
+            element={
+              <PrivateRoute>
+                <Dashboard></Dashboard>
               </PrivateRoute>
             }
           ></Route>

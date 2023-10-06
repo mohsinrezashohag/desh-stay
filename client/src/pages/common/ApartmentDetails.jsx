@@ -67,9 +67,15 @@ const ApartmentDetails = () => {
       // img2: apartment2,
       // img3: apartment3
 
-      img1: `http://localhost:8000/uploaded-images/${extraImages[0]}`,
-      img2: `http://localhost:8000/uploaded-images/${extraImages[1]}`,
-      img3: `http://localhost:8000/uploaded-images/${extraImages[2]}`,
+      img1: `${import.meta.env.VITE_SERVER_URL}/uploaded-images/${
+        extraImages[0]
+      }`,
+      img2: `${import.meta.env.VITE_SERVER_URL}/uploaded-images/${
+        extraImages[1]
+      }`,
+      img3: `${import.meta.env.VITE_SERVER_URL}/uploaded-images/${
+        extraImages[2]
+      }`,
     }
 
     content = (
@@ -102,7 +108,9 @@ const ApartmentDetails = () => {
               src={
                 activeImg
                   ? activeImg
-                  : `http://localhost:8000/uploaded-images/${thumbnail}`
+                  : `${
+                      import.meta.env.VITE_SERVER_URL
+                    }/uploaded-images/${thumbnail}`
               }
               className='h-[500px] w-full rounded-md'
               alt=''

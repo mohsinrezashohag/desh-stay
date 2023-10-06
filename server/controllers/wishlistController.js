@@ -49,6 +49,7 @@ exports.addToWishlist = async (req, res, next) => {
 exports.userWishlist = async (req, res, next) => {
     try {
         const userId = req.params.userId
+        console.log("ekhane thik ee hit hocche");
         const myWishProperties = await Wishlist.find({ user: userId }).populate({
             path: "property",
             select: "title thumbnail basics basics detailsAddress costPerNight"

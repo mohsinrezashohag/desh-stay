@@ -64,6 +64,12 @@ input:active{
   color: white;
   font-weight: 500;
 }
+.white-primary-btn{
+  background-color: white;
+  padding: 10px 15px;
+  color: black;
+  font-weight: 500;
+}
 
 .rounded-btn{
   background-color: var(--primary-color);

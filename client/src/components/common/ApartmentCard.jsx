@@ -48,7 +48,9 @@ const ApartmentCard = ({ property }) => {
           <Link to={`/apartment-details/${id}`}>
             <img
               className='object-cover h-full w-full rounded-xl '
-              src={`http://localhost:8000/uploaded-images/${thumbnail}`}
+              src={`${
+                import.meta.env.VITE_SERVER_URL
+              }/uploaded-images/${thumbnail}`}
               alt='Listing'
             />
           </Link>

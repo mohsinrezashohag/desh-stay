@@ -247,7 +247,9 @@ const SearchResult = () => {
                     <div>
                       <img
                         className='rounded-md'
-                        src={`http://localhost:8000/uploaded-images/${item?.thumbnail}`}
+                        src={`${
+                          import.meta.env.VITE_SERVER_URL
+                        }/uploaded-images/${item?.thumbnail}`}
                         width={250}
                         alt=''
                       />

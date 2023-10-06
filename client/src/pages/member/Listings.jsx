@@ -74,13 +74,16 @@ const Listings = () => {
           {/*  listings */}
           <section className='max-width mt-10 '>
             <div className='grid grid-cols-5 gap-4'>
-              {properties &&
+              {properties ? (
                 properties?.map((property, index) => (
                   <ApartmentCard
                     key={index}
                     property={property}
                   ></ApartmentCard>
-                ))}
+                ))
+              ) : (
+                <p>No Property Available</p>
+              )}
             </div>
 
             <div className='join mx-auto items-center'>

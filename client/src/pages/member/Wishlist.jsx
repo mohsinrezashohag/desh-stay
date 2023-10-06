@@ -12,6 +12,7 @@ import userIcon from '../../assets/user-solid.svg'
 
 import {
   useGetAllWishlistQuery,
+  useGetMyWishlistQuery,
   useRemoveFromWishListMutation,
 } from '../../rtk/features/wishlist/wishlistApi'
 import { useSelector } from 'react-redux'
@@ -21,7 +22,11 @@ import { useEffect } from 'react'
 const Wishlist = () => {
   const user = useSelector((state) => state.user.userInfo)
 
-  const { data: myWishlist, isLoading, isError } = useGetAllWishlistQuery()
+  const {
+    data: myWishlist,
+    isLoading,
+    isError,
+  } = useGetMyWishlistQuery(user?._id)
   const [deleteWishlistItem, { isSuccess }] = useRemoveFromWishListMutation()
 
   useEffect(() => {
@@ -31,7 +36,6 @@ const Wishlist = () => {
   }, [isSuccess])
 
   // decide what to render
-
   let content
   if (isLoading && !isError) {
     content = <Loading></Loading>
@@ -48,7 +52,9 @@ const Wishlist = () => {
               >
                 <img
                   className='rounded-md'
-                  src={`http://localhost:8000/uploaded-images/${item?.property?.thumbnail}`}
+                  src={`${import.meta.env.VITE_SERVER_URL}/uploaded-images/${
+                    item?.property?.thumbnail
+                  }`}
                   width={250}
                   alt=''
                 />

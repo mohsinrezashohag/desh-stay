@@ -83,7 +83,7 @@ const Home = () => {
           <h1 className='text-2xl font-semibold text-bl uppercase text-center'>
             Our Available Deals
           </h1>
-          <div className='grid grid-cols-5 gap-4 mt-16'>
+          <div className='grid grid-cols-2 md:grid-cols-5 gap-4 mt-16 mx-2'>
             {properties &&
               properties?.map((property, index) => (
                 <ApartmentCard key={index} property={property}></ApartmentCard>
